@@ -106,21 +106,3 @@ if st.button('Predict'):
 # for percent_complete in range(100):
 # 	time.sleep(0.1)
 # 	my_bar.progress(percent_complete + 1)
-
-# df = pd.read_csv('/home/winjit/Documents/predictsense/dataset/classification/insurance.csv')
-
-# st.table(df)
-
-
-# import streamlit as st
-# import plotly.figure_factory as ff
-# import numpy as np
-
-# # Group data together
-# hist_data = [df['charges']]
-
-# group_labels = ['charges']
-# # Create distplot with custom bin_size
-# fig = ff.create_distplot(hist_data, group_labels, bin_size=[.1, .25, .5])
-# # Plot!
-# st.plotly_chart(fig, use_container_width=True)
