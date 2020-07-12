@@ -1,0 +1,7 @@
+{
+  "models":{
+    "Random Forest Regression":"random_forest_regressionmodel.sav",
+    "Polynomial Regression":"polynomial_regressionmodel.sav"
+  },
+  "pipeline":"pipeline.pickle"
+}
