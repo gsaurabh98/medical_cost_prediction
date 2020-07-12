@@ -7,6 +7,6 @@
 
     - purpose of the app, is to predict the medical cost
     - have used sklearn package to create model
-    - Two model has been trained which are:
+    - Two model have been trained which are:
         1. Polynomial regression
         2. Random forest regression
