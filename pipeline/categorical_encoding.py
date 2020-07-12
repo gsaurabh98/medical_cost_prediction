@@ -1,7 +1,6 @@
 # -*- coding: utf-8 -*-
 """
-created on Thr Jan 27 15:43:43 2020
-Author: Saurabh
+Author: saurabh
 """
 import numpy as np
 import pandas as pd
@@ -11,7 +10,6 @@ from sklearn.base import BaseEstimator, TransformerMixin
 class CategoricalEncoder(BaseEstimator, TransformerMixin):
 
     def __init__(self):
-
         self.input_features = []
 
     def _get_class_names(self, X):
@@ -27,10 +25,8 @@ class CategoricalEncoder(BaseEstimator, TransformerMixin):
         return class_dictionary
 
     def fit(self, X, y=None):
-
         self.input_features = X.select_dtypes('object').columns.tolist()
         self.class_names = self._get_class_names(X)
-
         return self
 
     def fit_transform(self, X, y=None, **fit_params):
