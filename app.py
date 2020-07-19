@@ -7,28 +7,28 @@ import json
 
 import random
 
-if not hasattr(st, 'already_started_server'):
-    # Hack the fact that Python modules (like st) only load once to
-    # keep track of whether this file already ran.
-    st.already_started_server = True
+# if not hasattr(st, 'already_started_server'):
+#     # Hack the fact that Python modules (like st) only load once to
+#     # keep track of whether this file already ran.
+#     st.already_started_server = True
 
-    st.write('''
-        The first time this script executes it will run forever because it's
-        running a Flask server.
+#     st.write('''
+#         The first time this script executes it will run forever because it's
+#         running a Flask server.
 
-        Just close this browser tab and open a new one to see your Streamlit
-        app.
-    ''')
+#         Just close this browser tab and open a new one to see your Streamlit
+#         app.
+#     ''')
 
-    from flask import Flask
+#     from flask import Flask
 
-    app = Flask(__name__)
+#     app = Flask(__name__)
 
-    @app.route('/foo')
-    def serve_foo():
-        return 'This page is served via Flask!'
+#     @app.route('/foo')
+#     def serve_foo():
+#         return 'This page is served via Flask!'
 
-    app.run(port=5005)
+#     app.run(port=5005)
 
 
 # We'll never reach this part of the code the first time this file executes!
@@ -53,7 +53,7 @@ sex= st.radio(
     ("male", "female")
 )
 st.text('')
-bmi = st.number_input('Bmi: Body mass index, providing an understanding of body, weights that are relatively high or low relative to height, objective index of body weight (kg / m ^ 2) using the ratio of height to weight, ideally 18.5 to 24.9', value= 18.5, key = 'bmi')
+bmi = st.number_input('Bmi: Body mass index, providing an understanding of body, weights that are relatively high or low relative to height, objective index of body weight (kg / m ^ 2) using the ratio of height to weight, ideally 18.5 to 24.9', value= 18.5, step=1.0, key = 'bmi')
 
 st.text('')
 children = st.slider('Children: Number of children covered by health insurance / Number of dependents', min_value =0, max_value=10)
@@ -88,6 +88,13 @@ pipeline = pd.read_pickle(config['pipeline'])
 
 model = pd.read_pickle(config['models'][selected_model])
 
+# uploaded_file = st.file_uploader("Choose a CSV file", type="csv")
+# st.write(uploaded_file)
+# if uploaded_file is not None:
+#     data = pd.read_csv(uploaded_file)
+#     # st.table(data.head(3))
+
+
 
 def highlight_green(series):
 	color = 'green' if series.name == 'predicted_value(charges)' else 'black'
@@ -96,9 +103,13 @@ def highlight_green(series):
 st.text('')
 if st.button('Predict'):
     X = pipeline.transform(df)
-    df.insert(0, 'predicted_value(charges)', model.predict(X))
-    st.text('')
-    st.table(df.style.apply(highlight_green, axis=0))
+
+    if 'charges' in X:
+        st.write("Dataset cannot have charges column")
+    else:
+        df.insert(0, 'predicted_value(charges)', model.predict(X))
+st.text('')
+st.table(df.style.apply(highlight_green, axis=0))
 
 
 # import time
@@ -106,3 +117,21 @@ if st.button('Predict'):
 # for percent_complete in range(100):
 # 	time.sleep(0.1)
 # 	my_bar.progress(percent_complete + 1)
+
+# df = pd.read_csv('/home/winjit/Documents/predictsense/dataset/classification/insurance.csv')
+
+# st.table(df)
+
+
+# import streamlit as st
+# import plotly.figure_factory as ff
+# import numpy as np
+
+# # Group data together
+# hist_data = [df['charges']]
+
+# group_labels = ['charges']
+# # Create distplot with custom bin_size
+# fig = ff.create_distplot(hist_data, group_labels, bin_size=[.1, .25, .5])
+# # Plot!
+# st.plotly_chart(fig, use_container_width=True)
